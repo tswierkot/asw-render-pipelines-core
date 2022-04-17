@@ -235,6 +235,16 @@ namespace UnityEditor.Rendering
 
                     CoreEditorUtils.DrawSplitter();
                     bool displayContent = CoreEditorUtils.DrawHeaderToggle(
+<<<<<<< HEAD
+                            title,
+                            editor.baseProperty,
+                            editor.activeProperty,
+                            pos => OnContextClick(pos, editor.target, id),
+                            editor.hasAdvancedMode ? () => editor.isInAdvancedMode : (Func<bool>)null,
+                            () => editor.isInAdvancedMode ^= true,
+                            documentationURL
+                            );
+=======
                         title,
                         editor.baseProperty,
                         editor.activeProperty,
@@ -243,6 +253,7 @@ namespace UnityEditor.Rendering
                         () => editor.showAdditionalProperties ^= true,
                         documentationURL
                     );
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
 
                     if (displayContent)
                     {
@@ -489,6 +500,10 @@ namespace UnityEditor.Rendering
             }
             m_SerializedObject.ApplyModifiedProperties();
         }
+<<<<<<< HEAD
+
+=======
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
 
         static bool CanPaste(VolumeComponent targetComponent)
         {

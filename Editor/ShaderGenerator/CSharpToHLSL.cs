@@ -45,9 +45,107 @@ namespace UnityEditor.Rendering
                 // Make sure we always release pooled resources
                 if (sourceGenerators != null)
                 {
+<<<<<<< HEAD
+                    FileInfo info = null;
+                    try
+                    {
+                        info = new FileInfo(fileName);
+                    }
+
+                    catch (UnauthorizedAccessException )
+
+                    {
+                        Debug.Log("Access to " + fileName + " is denied. Skipping it.");
+                        skipFile = true;
+                    }
+
+                    catch (System.Security.SecurityException )
+
+                    {
+                        Debug.Log("You do not have permission to access " + fileName + ". Skipping it.");
+                        skipFile = true;
+                    }
+
+                    if (info?.IsReadOnly ?? false)
+                    {
+                        Debug.Log(fileName + " is ReadOnly. Skipping it.");
+                        skipFile = true;
+                    }
+                }
+
+                if (skipFile)
+                    continue;
+
+                using (var writer = File.CreateText(fileName))
+                {
+                    writer.NewLine = Environment.NewLine;
+
+                    var guard = Path.GetFileName(fileName).Replace(".", "_").ToUpper();
+                    if (!char.IsLetter(guard[0]))
+                        guard = "_" + guard;
+
+                    writer.WriteLine("//");
+                    writer.WriteLine("// This file was automatically generated. Please don't edit by hand. Execute Editor command [ Edit / Render Pipeline / Generate Shader Includes ] instead");
+                    writer.WriteLine("//");
+                    writer.WriteLine();
+                    writer.WriteLine("#ifndef " + guard);
+                    writer.WriteLine("#define " + guard);
+
+                    foreach (var gen in it.Value)
+                    {
+                        if (gen.hasStatics)
+                        {
+                            writer.WriteLine(gen.EmitDefines().Replace("\n", writer.NewLine));
+                        }
+                    }
+
+                    foreach (var gen in it.Value)
+                    {
+                        if (gen.hasFields)
+                        {
+                            writer.WriteLine(gen.EmitTypeDecl().Replace("\n", writer.NewLine));
+                        }
+                    }
+
+                    foreach (var gen in it.Value)
+                    {
+                        if (gen.hasFields && gen.needAccessors && !gen.hasPackedInfo)
+                        {
+                            writer.Write(gen.EmitAccessors().Replace("\n", writer.NewLine));
+                            writer.Write(gen.EmitSetters().Replace("\n", writer.NewLine));
+                            const bool emitInitters = true;
+                            writer.Write(gen.EmitSetters(emitInitters).Replace("\n", writer.NewLine));
+                        }
+                    }
+
+                    foreach (var gen in it.Value)
+                    {
+                        if (gen.hasStatics && gen.hasFields && gen.needParamDebug && !gen.hasPackedInfo)
+                        {
+                            writer.WriteLine(gen.EmitFunctions().Replace("\n", writer.NewLine));
+                        }
+                    }
+
+                    foreach (var gen in it.Value)
+                    {
+                        if(gen.hasPackedInfo)
+                        {
+                            writer.WriteLine(gen.EmitPackedInfo().Replace("\n", writer.NewLine));
+                        }
+                    }
+
+                    writer.WriteLine();
+
+                    writer.WriteLine("#endif");
+
+                    var customFile = it.Key + ".custom.hlsl";
+                    if (File.Exists(customFile))
+                        writer.Write("#include \"{0}\"", Path.GetFileName(customFile));
+=======
                     foreach (var pair in sourceGenerators)
                         ListPool<ShaderTypeGenerator>.Release(pair.Value);
                     DictionaryPool<string, List<ShaderTypeGenerator>>.Release(sourceGenerators);
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
                 }
             }
         }

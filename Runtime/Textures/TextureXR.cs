@@ -40,7 +40,10 @@ namespace UnityEngine.Rendering
                     case GraphicsDeviceType.Direct3D12:
                     case GraphicsDeviceType.PlayStation4:
                     case GraphicsDeviceType.PlayStation5:
+<<<<<<< HEAD
+=======
                     case GraphicsDeviceType.PlayStation5NGGC:
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
                     case GraphicsDeviceType.Vulkan:
                         return true;
 
@@ -93,12 +96,21 @@ namespace UnityEngine.Rendering
         /// <returns>The default magenta texture.</returns>
         public static RTHandle GetMagentaTexture() { return useTexArray ? m_MagentaTexture2DArrayRTH : m_MagentaTextureRTH; }
 
+<<<<<<< HEAD
+        static Texture2D        m_BlackTexture;
+        static Texture3D        m_BlackTexture3D;
+        static Texture2DArray   m_BlackTexture2DArray;
+        static RTHandle         m_BlackTexture2DArrayRTH;
+        static RTHandle         m_BlackTextureRTH;
+        static RTHandle         m_BlackTexture3DRTH;
+=======
         static Texture2D m_BlackTexture;
         static Texture3D m_BlackTexture3D;
         static Texture2DArray m_BlackTexture2DArray;
         static RTHandle m_BlackTexture2DArrayRTH;
         static RTHandle m_BlackTextureRTH;
         static RTHandle m_BlackTexture3DRTH;
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
         /// <summary>
         /// Default black texture.
         /// </summary>

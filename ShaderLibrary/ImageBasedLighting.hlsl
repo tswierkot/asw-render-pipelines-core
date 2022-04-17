@@ -5,6 +5,10 @@
 #pragma warning (disable : 3205) // conversion of larger type to smaller
 #endif
 
+#if SHADER_API_MOBILE || SHADER_API_GLES || SHADER_API_GLES3
+#pragma warning (disable : 3205) // conversion of larger type to smaller
+#endif
+
 #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/CommonLighting.hlsl"
 #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/CommonMaterial.hlsl"
 #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/BSDF.hlsl"
@@ -710,4 +714,8 @@ float InfluenceFadeNormalWeight(float3 normal, float3 centerToPos)
 #pragma warning (enable : 3205) // conversion of larger type to smaller
 #endif
 
+<<<<<<< HEAD
+#endif // UNITY_IMAGE_BASED_LIGHTING_INCLUDED
+=======
 #endif // UNITY_IMAGE_BASED_LIGHTING_HLSL_INCLUDED
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76

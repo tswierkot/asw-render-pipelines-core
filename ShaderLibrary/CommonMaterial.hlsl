@@ -361,7 +361,10 @@ real3 LerpWhiteTo(real3 b, real t)
     real oneMinusT = 1.0 - t;
     return real3(oneMinusT, oneMinusT, oneMinusT) + b * t;
 }
+<<<<<<< HEAD
+=======
 #endif
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
 
 #if SHADER_API_MOBILE || SHADER_API_GLES || SHADER_API_GLES3
 #pragma warning (enable : 3205) // conversion of larger type to smaller

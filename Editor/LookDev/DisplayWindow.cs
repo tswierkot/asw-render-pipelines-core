@@ -253,7 +253,11 @@ namespace UnityEditor.Rendering.LookDev
                     rootVisualElement.styleSheets.Add(styleSheetLight);
             }
         }
+<<<<<<< HEAD
+        
+=======
 
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
         void CreateGUI()
         {
             ReloadStyleSheets();
@@ -285,7 +289,11 @@ namespace UnityEditor.Rendering.LookDev
         }
 
         void OnEnable()
+<<<<<<< HEAD
+        { 
+=======
         {
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
             Undo.undoRedoPerformed += FullRefreshEnvironmentList;
         }
 
@@ -677,7 +685,11 @@ namespace UnityEditor.Rendering.LookDev
 
         void OnGUI()
         {
+<<<<<<< HEAD
+            if(EditorApplication.isUpdating)
+=======
             if (EditorApplication.isUpdating)
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
                 return;
 
             //deal with missing style on domain reload...

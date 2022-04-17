@@ -116,12 +116,16 @@ namespace UnityEngine.Rendering
         /// <returns>RenderTexture representation of the RTHandle.</returns>
         public static implicit operator RenderTexture(RTHandle handle)
         {
+<<<<<<< HEAD
+            return handle != null ? handle.nameID : default(RenderTargetIdentifier);
+=======
             // If RTHandle is null then conversion should give a null RenderTexture
             if (handle == null)
                 return null;
 
             Debug.Assert(handle.rt != null, "RTHandle was created using a regular Texture and is used as a RenderTexture");
             return handle.rt;
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
         }
 
         internal void SetRenderTexture(RenderTexture rt)

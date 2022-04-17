@@ -33,6 +33,18 @@ namespace UnityEngine.Rendering
         [Obsolete("Please use baseComponentTypeArray instead.")]
         public IEnumerable<Type> baseComponentTypes
         {
+<<<<<<< HEAD
+            get
+            {
+                return baseComponentTypeArray;
+            }
+            private set
+            {
+                baseComponentTypeArray = value.ToArray();
+            }
+        }
+
+=======
             get => baseComponentTypeArray;
             private set => baseComponentTypeArray = value.ToArray();
         }
@@ -40,6 +52,7 @@ namespace UnityEngine.Rendering
         /// <summary>
         /// The current list of all available types that derive from <see cref="VolumeComponent"/>.
         /// </summary>
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
         public Type[] baseComponentTypeArray { get; private set; }
 
         // Max amount of layers available in Unity
@@ -252,7 +265,11 @@ namespace UnityEngine.Rendering
 
                 for (int i = 0; i < count; i++)
                 {
+<<<<<<< HEAD
+                    if(target.parameters[i] != null)
+=======
                     if (target.parameters[i] != null)
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
                     {
                         target.parameters[i].overrideState = false;
                         target.parameters[i].SetValue(component.parameters[i]);
@@ -499,11 +516,19 @@ namespace UnityEngine.Rendering
         /// Constructs a scope in which a Camera filters a Volume.
         /// </summary>
         /// <param name="unused">Unused parameter.</param>
+<<<<<<< HEAD
+        public VolumeIsolationScope(bool unused) {}
+=======
         public VolumeIsolationScope(bool unused) { }
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
 
         /// <summary>
         /// Stops the Camera from filtering a Volume.
         /// </summary>
+<<<<<<< HEAD
+        void IDisposable.Dispose() {}
+=======
         void IDisposable.Dispose() { }
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
     }
 }

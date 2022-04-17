@@ -21,6 +21,13 @@ namespace UnityEngine.Experimental.Rendering.RenderGraphModule
         public bool enableAsyncCompute { get; protected set; }
         public bool allowPassCulling { get; protected set; }
 
+<<<<<<< HEAD
+        public TextureHandle    depthBuffer { get; protected set; }
+        public TextureHandle[]  colorBuffers { get; protected set; } = new TextureHandle[RenderGraph.kMaxMRTCount];
+        public int              colorBufferMaxIndex { get; protected set; } = -1;
+        public int              refCount { get; protected set; }
+        public bool             generateDebugData { get; protected set; }
+=======
         public TextureHandle depthBuffer { get; protected set; }
         public TextureHandle[] colorBuffers { get; protected set; } = new TextureHandle[RenderGraph.kMaxMRTCount];
         public int colorBufferMaxIndex { get; protected set; } = -1;
@@ -28,14 +35,18 @@ namespace UnityEngine.Experimental.Rendering.RenderGraphModule
         public bool generateDebugData { get; protected set; }
 
         public bool allowRendererListCulling { get; protected set; }
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
 
         public List<ResourceHandle>[] resourceReadLists = new List<ResourceHandle>[(int)RenderGraphResourceType.Count];
         public List<ResourceHandle>[] resourceWriteLists = new List<ResourceHandle>[(int)RenderGraphResourceType.Count];
         public List<ResourceHandle>[] transientResourceList = new List<ResourceHandle>[(int)RenderGraphResourceType.Count];
 
         public List<RendererListHandle> usedRendererListList = new List<RendererListHandle>();
+<<<<<<< HEAD
+=======
 
         public List<RendererListHandle> dependsOnRendererListList = new List<RendererListHandle>();
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
 
         public RenderGraphPass()
         {
@@ -63,7 +74,10 @@ namespace UnityEngine.Experimental.Rendering.RenderGraphModule
             dependsOnRendererListList.Clear();
             enableAsyncCompute = false;
             allowPassCulling = true;
+<<<<<<< HEAD
+=======
             allowRendererListCulling = true;
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
             generateDebugData = true;
             refCount = 0;
 
@@ -111,11 +125,14 @@ namespace UnityEngine.Experimental.Rendering.RenderGraphModule
             allowPassCulling = value;
         }
 
+<<<<<<< HEAD
+=======
         public void AllowRendererListCulling(bool value)
         {
             allowRendererListCulling = value;
         }
 
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
         public void GenerateDebugData(bool value)
         {
             generateDebugData = value;

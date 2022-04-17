@@ -4,11 +4,62 @@ All notable changes to this package will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+<<<<<<< HEAD
+## [10.8.0] - 2021-09-20
+=======
 ## [12.1.6] - 2022-02-09
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
 
 Version Updated
 The version number for this package has increased due to a version update of a related graphics package.
 
+<<<<<<< HEAD
+## [10.7.0] - 2021-07-02
+
+### Fixed
+- Fixed Volume Gizmo size when rescaling parent GameObject
+
+## [10.6.0] - 2021-04-29
+
+### Fixed
+- Fixed ACES filter artefact due to half floating point error on some mobile platforms.
+- Fixed Explicit half precision not working even when Unified Shader Precision Model is enabled.
+- Fixed memory leak when changing SRP pipeline settings, and having the player in pause mode.
+- Skip wind calculations for Speed Tree 8 when wind vector is zero (case 1343002)
+
+## [10.5.0] - 2021-04-19
+
+Version Updated
+The version number for this package has increased due to a version update of a related graphics package.
+
+## [10.4.0] - 2021-03-11
+
+### Added
+- Support for the XboxSeries platform has been added.
+- New API in DynamicResolutionHandler to handle multicamera rendering for hardware mode. Changing cameras and resetting scaling per camera should be safe.
+- New API functions with no side effects in DynamicResolutionHandler, to retrieve resolved drs scale and to apply DRS on a size.
+- Added SpeedTree8MaterialUpgrader, which provides utilities for upgrading and importing SpeedTree 8 assets to scriptable render pipelines.
+
+### Fixed
+- Fixed parameters order on inspectors for Volume Components without custom editor
+- Fixed the display name of a Volume Parameter when is defined the attribute InspectorName
+- Calculating correct rtHandleScale by considering the possible pixel rounding when DRS is on
+
+## [10.3.1] - 2021-01-26
+
+Version Updated
+The version number for this package has increased due to a version update of a related graphics package.
+
+## [10.3.0] - 2020-11-16
+
+### Added
+- New function in GeometryTools.hlsl to calculate triangle edge and full triangle culling.
+- Support for the PlayStation 5 platform has been added.
+
+### Fixed
+- Fixed a bug in FreeCamera which would only provide a speed boost for the first frame when pressing the Shfit key.
+- Fixed missing warning UI about Projector component being unsupported (case 1300327).
+=======
 ## [12.1.5] - 2022-01-14
 
 ### Added
@@ -171,6 +222,7 @@ The version number for this package has increased due to a version update of a r
 - New View Lighting Tool, a component which allow to setup light in the camera space
 - New function in GeometryTools.hlsl to calculate triangle edge and full triangle culling.
 - Several utils functions to access SphericalHarmonicsL2 in a more verbose and intuitive fashion.
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
 
 ## [10.2.0] - 2020-10-19
 
@@ -187,6 +239,9 @@ The version number for this package has increased due to a version update of a r
 - Fixed the scene view to scale correctly when hardware dynamic resolution is enabled (case 1158661)
 - Fixed game view artifacts on resizing when hardware dynamic resolution was enabled
 - Fixed issue that caused `UNITY_REVERSED_Z` and `UNITY_UV_STARTS_AT_TOP` being defined in platforms that don't support it.
+
+### Changed
+- LookDev menu item entry is now disabled if the current pipeline does not support it.
 
 ### Changed
 - LookDev menu item entry is now disabled if the current pipeline does not support it.

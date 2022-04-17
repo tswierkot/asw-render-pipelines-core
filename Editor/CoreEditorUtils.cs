@@ -16,6 +16,103 @@ namespace UnityEditor.Rendering
     /// <summary>Utility class for Editor</summary>
     public static class CoreEditorUtils
     {
+<<<<<<< HEAD
+        class Styles
+        {
+            static readonly Color k_Normal_AllTheme = new Color32(0, 0, 0, 0);
+            //static readonly Color k_Hover_Dark = new Color32(70, 70, 70, 255);
+            //static readonly Color k_Hover = new Color32(193, 193, 193, 255);
+            static readonly Color k_Active_Dark = new Color32(80, 80, 80, 255);
+            static readonly Color k_Active = new Color32(216, 216, 216, 255);
+
+            static readonly int s_MoreOptionsHash = "MoreOptions".GetHashCode();
+
+            static public GUIContent moreOptionsLabel { get; private set; }
+            static public GUIStyle moreOptionsStyle { get; private set; }
+            static public GUIStyle moreOptionsLabelStyle { get; private set; }
+
+            static Styles()
+            {
+                moreOptionsLabel = EditorGUIUtility.TrIconContent("MoreOptions", "More Options");
+
+                moreOptionsStyle = new GUIStyle(GUI.skin.toggle);
+                Texture2D normalColor = new Texture2D(1, 1);
+                normalColor.SetPixel(1, 1, k_Normal_AllTheme);
+                moreOptionsStyle.normal.background = normalColor;
+                moreOptionsStyle.onActive.background = normalColor;
+                moreOptionsStyle.onFocused.background = normalColor;
+                moreOptionsStyle.onNormal.background = normalColor;
+                moreOptionsStyle.onHover.background = normalColor;
+                moreOptionsStyle.active.background = normalColor;
+                moreOptionsStyle.focused.background = normalColor;
+                moreOptionsStyle.hover.background = normalColor;
+
+                moreOptionsLabelStyle = new GUIStyle(GUI.skin.label);
+                moreOptionsLabelStyle.padding = new RectOffset(0, 0, 0, -1);
+            }
+
+            //Note:
+            // - GUIStyle seams to be broken: all states have same state than normal light theme
+            // - Hover with event will not be updated right when we enter the rect
+            //-> Removing hover for now. Keep theme color for refactoring with UIElement later
+            static public bool DrawMoreOptions(Rect rect, bool active)
+            {
+                int id = GUIUtility.GetControlID(s_MoreOptionsHash, FocusType.Passive, rect);
+                var evt = Event.current;
+                switch (evt.type)
+                {
+                    case EventType.Repaint:
+                        Color background = k_Normal_AllTheme;
+                        if (active)
+                            background = EditorGUIUtility.isProSkin ? k_Active_Dark : k_Active;
+                        EditorGUI.DrawRect(rect, background);
+                        GUI.Label(rect, moreOptionsLabel, moreOptionsLabelStyle);
+                        break;
+                    case EventType.KeyDown:
+                        bool anyModifiers = (evt.alt || evt.shift || evt.command || evt.control);
+                        if ((evt.keyCode == KeyCode.Space || evt.keyCode == KeyCode.Return || evt.keyCode == KeyCode.KeypadEnter) && !anyModifiers && GUIUtility.keyboardControl == id)
+                        {
+                            evt.Use();
+                            GUI.changed = true;
+                            return !active;
+                        }
+                        break;
+                    case EventType.MouseDown:
+                        if (rect.Contains(evt.mousePosition))
+                        {
+                            GrabMouseControl(id);
+                            evt.Use();
+                        }
+                        break;
+                    case EventType.MouseUp:
+                        if (HasMouseControl(id))
+                        {
+                            ReleaseMouseControl();
+                            evt.Use();
+                            if (rect.Contains(evt.mousePosition))
+                            {
+                                GUI.changed = true;
+                                return !active;
+                            }
+                        }
+                        break;
+                    case EventType.MouseDrag:
+                        if (HasMouseControl(id))
+                            evt.Use();
+                        break;
+                }
+
+                return active;
+            }
+
+            static int s_GrabbedID = -1;
+            static void GrabMouseControl(int id) => s_GrabbedID = id;
+            static void ReleaseMouseControl() => s_GrabbedID = -1;
+            static bool HasMouseControl(int id) => s_GrabbedID == id;
+        }
+
+=======
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
         static GraphicsDeviceType[] m_BuildTargets;
 
         /// <summary>Build targets</summary>
@@ -324,6 +421,19 @@ namespace UnityEditor.Rendering
             foldoutRect.width = 13f;
             foldoutRect.height = 13f;
             foldoutRect.x = labelRect.xMin + 15 * (EditorGUI.indentLevel - 1); //fix for presset
+<<<<<<< HEAD
+
+            // More options 1/2
+            var moreOptionsRect = new Rect();
+            if (hasMoreOptions != null)
+            {
+                moreOptionsRect = backgroundRect;
+                moreOptionsRect.x += moreOptionsRect.width - 16 - 1;
+                moreOptionsRect.height = 15;
+                moreOptionsRect.width = 16;
+            }
+=======
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
 
             // Background rect should be full-width
             backgroundRect.xMin = 0f;
@@ -357,6 +467,8 @@ namespace UnityEditor.Rendering
                 contextAction = pos => OnContextClick(pos, hasMoreOptions, toggleMoreOptions);
             }
 
+<<<<<<< HEAD
+=======
             if (contextAction != null)
             {
                 if (GUI.Button(menuRect, CoreEditorStyles.contextMenuIcon, CoreEditorStyles.contextMenuStyle))
@@ -384,6 +496,7 @@ namespace UnityEditor.Rendering
                 }
             }
 
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
             return state;
         }
 
@@ -489,7 +602,11 @@ namespace UnityEditor.Rendering
         /// <param name="toggleMoreOptions">Callback called when the MoreOptions is toggled</param>
         /// <returns>return the state of the foldout header</returns>
         public static bool DrawHeaderToggle(GUIContent title, SerializedProperty group, SerializedProperty activeField, Action<Vector2> contextAction = null, Func<bool> hasMoreOptions = null, Action toggleMoreOptions = null)
+<<<<<<< HEAD
+         => DrawHeaderToggle(title, group, activeField, contextAction, hasMoreOptions, toggleMoreOptions, null);
+=======
             => DrawHeaderToggle(title, group, activeField, contextAction, hasMoreOptions, toggleMoreOptions, null);
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
 
         /// <summary>Draw a header toggle like in Volumes</summary>
         /// <param name="title"> The title of the header </param>
@@ -531,6 +648,24 @@ namespace UnityEditor.Rendering
             toggleRect.width = 13f;
             toggleRect.height = 13f;
 
+<<<<<<< HEAD
+            // More options 1/2
+            var moreOptionsRect = new Rect();
+            if (hasMoreOptions != null)
+            {
+                moreOptionsRect = backgroundRect;
+
+                moreOptionsRect.x += moreOptionsRect.width - 16 - 1 - 16 - 5;
+
+                if (!string.IsNullOrEmpty(documentationURL))
+                    moreOptionsRect.x -= 16 + 7;
+
+                moreOptionsRect.height = 15;
+                moreOptionsRect.width = 16;
+            }
+
+=======
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
             // Background rect should be full-width
             backgroundRect.xMin = 0f;
             backgroundRect.width += 4f;
@@ -571,6 +706,21 @@ namespace UnityEditor.Rendering
 
             // Documentation button
             ShowHelpButton(contextMenuRect, documentationURL, title);
+
+            // Documentation button
+            if (!String.IsNullOrEmpty(documentationURL))
+            {
+                var documentationRect = menuRect;
+                documentationRect.x -= 16 + 5;
+                documentationRect.y -= 1;
+
+                var documentationTooltip = $"Open Reference for {title.text}.";
+                var documentationIcon = new GUIContent(EditorGUIUtility.TrIconContent("_Help").image, documentationTooltip);
+                var documentationStyle = new GUIStyle("IconButton");
+
+                if (GUI.Button(documentationRect, documentationIcon, documentationStyle))
+                    System.Diagnostics.Process.Start(documentationURL);
+            }
 
             // Handle events
             var e = Event.current;

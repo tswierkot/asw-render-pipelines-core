@@ -193,7 +193,11 @@ namespace UnityEngine.Rendering
 
         /// <summary>
         /// Release all currently allocated singleton constant buffers.
+<<<<<<< HEAD
+        /// This needs to be called before shutting down the application. 
+=======
         /// This needs to be called before shutting down the application.
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
         /// </summary>
         public static void ReleaseAll()
         {
@@ -209,6 +213,11 @@ namespace UnityEngine.Rendering
         }
     }
 
+<<<<<<< HEAD
+    }
+
+=======
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
     /// <summary>
     /// The base class of Constant Buffer.
     /// </summary>
@@ -244,7 +253,11 @@ namespace UnityEngine.Rendering
         }
 
         /// <summary>
+<<<<<<< HEAD
+        /// Update the GPU data of the constant buffer.
+=======
         /// Update the GPU data of the constant buffer via a command buffer.
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
         /// </summary>
         /// <param name="cmd">Command Buffer used to execute the graphic commands.</param>
         /// <param name="data">Input data of the constant buffer.</param>
@@ -259,6 +272,44 @@ namespace UnityEngine.Rendering
         }
 
         /// <summary>
+<<<<<<< HEAD
+        /// Bind the constant buffer globally.
+        /// </summary>
+        /// <param name="cmd">Command Buffer used to execute the graphic commands.</param>
+        /// <param name="shaderId">Shader porperty id to bind the constant buffer to.</param>
+        public void SetGlobal(CommandBuffer cmd, int shaderId)
+        {
+            m_GlobalBindings.Add(shaderId);
+            cmd.SetGlobalConstantBuffer(m_GPUConstantBuffer, shaderId, 0, m_GPUConstantBuffer.stride);
+        }
+
+        /// <summary>
+        /// Bind the constant buffer to a compute shader.
+        /// </summary>
+        /// <param name="cmd">Command Buffer used to execute the graphic commands.</param>
+        /// <param name="cs">Compute shader to which the constant buffer should be bound.</param>
+        /// <param name="shaderId">Shader porperty id to bind the constant buffer to.</param>
+        public void Set(CommandBuffer cmd, ComputeShader cs, int shaderId)
+        {
+            cmd.SetComputeConstantBufferParam(cs, shaderId, m_GPUConstantBuffer, 0, m_GPUConstantBuffer.stride);
+        }
+
+        /// <summary>
+        /// Bind the constant buffer to a material.
+        /// </summary>
+        /// <param name="mat">Material to which the constant buffer should be bound.</param>
+        /// <param name="shaderId">Shader porperty id to bind the constant buffer to.</param>
+        public void Set(Material mat, int shaderId)
+        {
+            // This isn't done via command buffer because as long as the buffer itself is not destroyed,
+            // the binding stays valid. Only the commit of data needs to go through the command buffer.
+            // We do it here anyway for now to simplify user API.
+            mat.SetConstantBuffer(shaderId, m_GPUConstantBuffer, 0, m_GPUConstantBuffer.stride);
+        }
+
+        /// <summary>
+        /// Update the GPU data of the constant buffer and bind it globally.
+=======
         /// Update the GPU data of the constant buffer.
         /// </summary>
         /// <param name="data">Input data of the constant buffer.</param>
@@ -325,6 +376,7 @@ namespace UnityEngine.Rendering
 
         /// <summary>
         /// Update the GPU data of the constant buffer and bind it globally via a command buffer.
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
         /// </summary>
         /// <param name="cmd">Command Buffer used to execute the graphic commands.</param>
         /// <param name="data">Input data of the constant buffer.</param>
@@ -334,6 +386,9 @@ namespace UnityEngine.Rendering
             UpdateData(cmd, data);
             SetGlobal(cmd, shaderId);
         }
+<<<<<<< HEAD
+        
+=======
 
         /// <summary>
         /// Update the GPU data of the constant buffer and bind it globally.
@@ -346,6 +401,7 @@ namespace UnityEngine.Rendering
             SetGlobal(shaderId);
         }
 
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
         /// <summary>
         /// Release the constant buffers.
         /// </summary>

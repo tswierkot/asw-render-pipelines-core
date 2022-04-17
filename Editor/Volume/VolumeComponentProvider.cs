@@ -56,9 +56,14 @@ namespace UnityEditor.Rendering
                 out var supportedVolumeComponents))
                 return supportedVolumeComponents;
 
+<<<<<<< HEAD
+            var types = VolumeManager.instance.baseComponentTypeArray;
+            var rootNode = new PathNode();
+=======
             supportedVolumeComponents = FilterVolumeComponentTypes(
                 VolumeManager.instance.baseComponentTypeArray, currentPipelineType);
             s_SupportedVolumeComponentsForRenderPipeline[currentPipelineType] = supportedVolumeComponents;
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
 
             return supportedVolumeComponents;
         }

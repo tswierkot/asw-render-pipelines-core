@@ -154,6 +154,8 @@ namespace UnityEngine.Rendering
 
             return m_RTHandles[bufferId].Length;
         }
+<<<<<<< HEAD
+=======
 
         /// <summary>
         /// Returns the ratio against the current target's max resolution
@@ -165,6 +167,7 @@ namespace UnityEngine.Rendering
         {
             return m_RTHandleSystem.CalculateRatioAgainstMaxSize(new Vector2Int(width, height));
         }
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
 
         void Swap()
         {

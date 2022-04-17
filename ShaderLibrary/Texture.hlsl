@@ -47,8 +47,11 @@ struct UnityTexture2D
     float4 SampleBias(UnitySamplerState s, float2 uv, float bias)       { return SAMPLE_TEXTURE2D_BIAS(tex, s.samplerstate, uv, bias); }
     float4 SampleGrad(UnitySamplerState s, float2 uv, float2 dpdx, float2 dpdy) { return SAMPLE_TEXTURE2D_GRAD(tex, s.samplerstate, uv, dpdx, dpdy); }
 
+<<<<<<< HEAD
+=======
     float2 GetTransformedUV(float2 uv)                                  { return uv * scaleTranslate.xy + scaleTranslate.zw; }
 
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
 #ifndef SHADER_API_GLES
     float CalculateLevelOfDetail(UnitySamplerState s, float2 uv)        { return CALCULATE_TEXTURE2D_LOD(tex, s.samplerstate, uv); }
 
@@ -94,7 +97,10 @@ UnityTexture2D UnityBuildTexture2DStructInternal(TEXTURE2D_PARAM(tex, samplersta
     return result;
 }
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
 struct UnityTexture2DArray
 {
     TEXTURE2D_ARRAY(tex);

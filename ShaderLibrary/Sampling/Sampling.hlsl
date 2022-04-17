@@ -309,6 +309,8 @@ void SampleCone(real2 u, real cosHalfAngle,
     rcpPdf = TWO_PI * (1 - cosHalfAngle);
 }
 
+<<<<<<< HEAD
+=======
 // Returns uniformly distributed sample vectors in a cone using
 // "golden angle spiral method" described here: http://blog.marmakoide.org/?p=1
 // note: the first sample is always [0, 0, 1]
@@ -322,6 +324,7 @@ real3 SampleConeStrata(uint sampleIdx, real rcpSampleCount, real cosHalfApexAngl
     return real3(r * cphi, r * sphi, z);
 }
 
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
 #if SHADER_API_MOBILE || SHADER_API_GLES || SHADER_API_GLES3
 #pragma warning (enable : 3205) // conversion of larger type to smaller
 #endif

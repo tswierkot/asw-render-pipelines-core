@@ -109,6 +109,8 @@ namespace UnityEditor.Rendering
     [VolumeParameterDrawer(typeof(LayerMaskParameter))]
     sealed class LayerMaskParameterDrawer : VolumeParameterDrawer
     {
+<<<<<<< HEAD
+=======
         private static int FieldToLayerMask(int field)
         {
             int mask = 0;
@@ -144,6 +146,7 @@ namespace UnityEditor.Rendering
             return everything ? -1 : field;
         }
 
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
         public override bool OnGUI(SerializedDataParameter parameter, GUIContent title)
         {
             var value = parameter.value;
@@ -151,9 +154,14 @@ namespace UnityEditor.Rendering
             if (value.propertyType != SerializedPropertyType.LayerMask)
                 return false;
 
+<<<<<<< HEAD
+            value.intValue = InternalEditorUtility.ConcatenatedLayersMaskToLayerMask(
+                EditorGUILayout.MaskField(title, InternalEditorUtility.LayerMaskToConcatenatedLayersMask(value.intValue), InternalEditorUtility.layers));
+=======
             value.intValue = FieldToLayerMask(
                 EditorGUILayout.MaskField(title, LayerMaskToField(value.intValue), InternalEditorUtility.layers));
 
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
             return true;
         }
     }

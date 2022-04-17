@@ -66,7 +66,11 @@ namespace UnityEngine.Rendering
         int m_MaxWidths = 0;
         int m_MaxHeights = 0;
 #if UNITY_EDITOR
+<<<<<<< HEAD
+        // In editor every now and then we must reset the size of the rthandle system if it was set very high and then switched back to a much smaller scale. 
+=======
         // In editor every now and then we must reset the size of the rthandle system if it was set very high and then switched back to a much smaller scale.
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
         int m_FramesSinceLastReset = 0;
 #endif
 
@@ -173,6 +177,27 @@ namespace UnityEngine.Rendering
             const int resetInterval = 100;
             if (((m_MaxWidths / (float)width) > 2.0f && m_MaxWidths > 2560) ||
                 ((m_MaxHeights / (float)height) > 2.0f && m_MaxHeights > 1440))
+<<<<<<< HEAD
+            {
+                if (m_FramesSinceLastReset > resetInterval)
+                {
+                    m_FramesSinceLastReset = 0;
+                    ResetReferenceSize(width, height);
+                }
+                m_FramesSinceLastReset++;
+            }
+
+            // If some cameras is requesting the same res as the max res, we don't want to reset
+            if (m_MaxWidths == width && m_MaxHeights == height)
+                m_FramesSinceLastReset = 0;
+#endif
+
+            bool sizeChanged = width > GetMaxWidth() || height > GetMaxHeight() || reset;
+            bool msaaSamplesChanged = (msaaSamples != m_ScaledRTCurrentMSAASamples);
+
+            if (sizeChanged || msaaSamplesChanged)
+=======
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
             {
                 if (m_FramesSinceLastReset > resetInterval)
                 {
@@ -210,8 +235,18 @@ namespace UnityEngine.Rendering
             var scales = CalculateRatioAgainstMaxSize(m_RTHandleProperties.currentViewportSize);
             if (DynamicResolutionHandler.instance.HardwareDynamicResIsEnabled() && m_HardwareDynamicResRequested)
             {
+<<<<<<< HEAD
+                Vector2Int maxSize = new Vector2Int(GetMaxWidth(), GetMaxHeight());
+                // Making the final scale in 'drs' space, since the final scale must account for rounding pixel values.
+                var scaledFinalViewport = DynamicResolutionHandler.instance.ApplyScalesOnSize(DynamicResolutionHandler.instance.finalViewport);
+                var scaledMaxSize = DynamicResolutionHandler.instance.ApplyScalesOnSize(maxSize);
+                float xScale = (float)scaledFinalViewport.x / (float)scaledMaxSize.x;
+                float yScale = (float)scaledFinalViewport.y / (float)scaledMaxSize.y;
+                m_RTHandleProperties.rtHandleScale = new Vector4(xScale, yScale, m_RTHandleProperties.rtHandleScale.x, m_RTHandleProperties.rtHandleScale.y);
+=======
                 // Making the final scale in 'drs' space, since the final scale must account for rounding pixel values.
                 m_RTHandleProperties.rtHandleScale = new Vector4(scales.x, scales.y, m_RTHandleProperties.rtHandleScale.x, m_RTHandleProperties.rtHandleScale.y);
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
             }
             else
             {
@@ -323,7 +358,11 @@ namespace UnityEngine.Rendering
                     rth.m_Name,
                     mips: rt.useMipMap,
                     enableMSAA: rth.m_EnableMSAA,
+<<<<<<< HEAD
+                    msaaSamples: m_ScaledRTCurrentMSAASamples,
+=======
                     msaaSamples: (MSAASamples)rt.antiAliasing,
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
                     dynamicRes: rt.useDynamicScale
                 );
 
@@ -399,7 +438,11 @@ namespace UnityEngine.Rendering
                 renderTexture.height = Mathf.Max(scaledSize.y, 1);
 
                 // Regenerate the name
+<<<<<<< HEAD
+                renderTexture.name = CoreUtils.GetRenderTargetAutoName(renderTexture.width, renderTexture.height, renderTexture.volumeDepth, renderTexture.graphicsFormat, renderTexture.dimension, rth.m_Name, mips: renderTexture.useMipMap, enableMSAA: rth.m_EnableMSAA, msaaSamples: m_ScaledRTCurrentMSAASamples, dynamicRes: renderTexture.useDynamicScale);
+=======
                 renderTexture.name = CoreUtils.GetRenderTargetAutoName(renderTexture.width, renderTexture.height, renderTexture.volumeDepth, renderTexture.graphicsFormat, renderTexture.dimension, rth.m_Name, mips: renderTexture.useMipMap, enableMSAA: rth.m_EnableMSAA, msaaSamples: (MSAASamples)renderTexture.antiAliasing, dynamicRes: renderTexture.useDynamicScale);
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
 
                 // Create the render texture
                 renderTexture.Create();
@@ -743,7 +786,11 @@ namespace UnityEngine.Rendering
                     useDynamicScale = m_HardwareDynamicResRequested && useDynamicScale,
                     memorylessMode = memoryless,
                     stencilFormat = stencilFormat,
+<<<<<<< HEAD
+                    name = CoreUtils.GetRenderTargetAutoName(width, height, slices, colorFormat, dimension, name, mips: useMipMap, enableMSAA: allocForMSAA, msaaSamples: m_ScaledRTCurrentMSAASamples, dynamicRes: useDynamicScale)
+=======
                     name = CoreUtils.GetRenderTargetAutoName(width, height, slices, colorFormat, dimension, name, mips: useMipMap, enableMSAA: enableMSAA, msaaSamples: msaaSamples, dynamicRes: useDynamicScale)
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
                 };
             }
             else
@@ -764,7 +811,11 @@ namespace UnityEngine.Rendering
                     bindTextureMS = bindTextureMS,
                     useDynamicScale = m_HardwareDynamicResRequested && useDynamicScale,
                     memorylessMode = memoryless,
+<<<<<<< HEAD
+                    name = CoreUtils.GetRenderTargetAutoName(width, height, slices, colorFormat, dimension, name, mips: useMipMap, enableMSAA: allocForMSAA, msaaSamples: m_ScaledRTCurrentMSAASamples, dynamicRes: useDynamicScale)
+=======
                     name = CoreUtils.GetRenderTargetAutoName(width, height, slices, colorFormat, dimension, name, mips: useMipMap, enableMSAA: enableMSAA, msaaSamples: msaaSamples, dynamicRes: useDynamicScale)
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
                 };
             }
 

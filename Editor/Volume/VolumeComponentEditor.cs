@@ -208,7 +208,14 @@ namespace UnityEditor.Rendering
 
             // Look for all the valid parameter drawers
             var types = CoreUtils.GetAllTypesDerivedFrom<VolumeParameterDrawer>()
+<<<<<<< HEAD
+                .Where(
+                    t => t.IsDefined(typeof(VolumeParameterDrawerAttribute), false)
+                    && !t.IsAbstract
+                );
+=======
                 .Where(t => t.IsDefined(typeof(VolumeParameterDrawerAttribute), false) && !t.IsAbstract);
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
 
             // Store them
             foreach (var type in types)
@@ -261,6 +268,10 @@ namespace UnityEditor.Rendering
             OnEnable();
         }
 
+<<<<<<< HEAD
+        void GetFields(object o, List<(FieldInfo, SerializedProperty)> infos, SerializedProperty prop = null)
+        {
+=======
         void InitParameters()
         {
             m_VolumeNotAdditionalParameters = new List<VolumeParameter>();
@@ -269,6 +280,7 @@ namespace UnityEditor.Rendering
 
         void GetFields(object o, List<(FieldInfo, SerializedProperty)> infos, SerializedProperty prop = null)
         {
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
             if (o == null)
                 return;
 
@@ -306,6 +318,21 @@ namespace UnityEditor.Rendering
             GetFields(target, fields);
 
             m_Parameters = fields
+<<<<<<< HEAD
+                .Select(t => {
+                    var name = "";
+                    var order = 0;
+                    var attr = (DisplayInfoAttribute[])t.Item1.GetCustomAttributes(typeof(DisplayInfoAttribute), true);
+                    if (attr.Length != 0)
+                    {
+                        name = attr[0].name;
+                        order = attr[0].order;
+                    }
+
+                    var parameter = new SerializedDataParameter(t.Item2);
+                    return (new GUIContent(name), order, parameter);
+                })
+=======
                 .Select(t =>
             {
                 var name = "";
@@ -321,6 +348,7 @@ namespace UnityEditor.Rendering
                 var parameter = new SerializedDataParameter(t.Item2);
                 return (EditorGUIUtility.TrTextContent(name), order, parameter);
             })
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
                 .OrderBy(t => t.order)
                 .ToList();
         }
@@ -465,6 +493,10 @@ namespace UnityEditor.Rendering
         /// <returns>true if the property field has been rendered</returns>
         protected bool PropertyField(SerializedDataParameter property)
         {
+<<<<<<< HEAD
+            var title = EditorGUIUtility.TrTextContent(property.displayName, property.GetAttribute<TooltipAttribute>()?.tooltip);
+            PropertyField(property, title);
+=======
             var title = EditorGUIUtility.TrTextContent(property.displayName,
                 property.GetAttribute<TooltipAttribute>()?.tooltip); // avoid property from getting the tooltip of another one with the same name
             return PropertyField(property, title);
@@ -532,6 +564,43 @@ namespace UnityEditor.Rendering
                     return indent.relativeAmount;
             }
             return 0;
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
+        }
+
+        /// <summary>
+        /// Handles unity built-in decorators (Space, Header, Tooltips, ...) from <see cref="SerializedDataParameter"/> attributes
+        /// </summary>
+        /// <param name="property">The property to obtain the attributes and handle the decorators</param>
+        /// <param name="title">A custom label and/or tooltip that might be updated by <see cref="TooltipAttribute"/> and/or by <see cref="InspectorNameAttribute"/></param>
+        void HandleDecorators(SerializedDataParameter property, GUIContent title)
+        {
+            foreach (var attr in property.attributes)
+            {
+                if (!(attr is PropertyAttribute))
+                    continue;
+
+                switch (attr)
+                {
+                    case SpaceAttribute spaceAttribute:
+                        EditorGUILayout.GetControlRect(false, spaceAttribute.height);
+                        break;
+                    case HeaderAttribute headerAttribute:
+                    {
+                        var rect = EditorGUI.IndentedRect(EditorGUILayout.GetControlRect(false, EditorGUIUtility.singleLineHeight));
+                        EditorGUI.LabelField(rect, headerAttribute.header, EditorStyles.miniLabel);
+                        break;
+                    }
+                    case TooltipAttribute tooltipAttribute:
+                    {
+                        if (string.IsNullOrEmpty(title.tooltip))
+                            title.tooltip = tooltipAttribute.tooltip;
+                        break;
+                    }
+                    case InspectorNameAttribute inspectorNameAttribute:
+                        title.text = inspectorNameAttribute.displayName;
+                        break;
+                }
+            }
         }
 
         /// <summary>
@@ -543,6 +612,9 @@ namespace UnityEditor.Rendering
         /// <returns>true if the property field has been rendered</returns>
         protected bool PropertyField(SerializedDataParameter property, GUIContent title)
         {
+<<<<<<< HEAD
+            HandleDecorators(property, title);
+=======
             if (VolumeParameter.IsObjectParameter(property.referenceType))
                 return DrawEmbeddedField(property, title);
             else
@@ -569,6 +641,7 @@ namespace UnityEditor.Rendering
                 // Standard Unity drawer
                 EditorGUILayout.PropertyField(property.value, title);
             }
+>>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
 
             return true;
         }
