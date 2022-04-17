@@ -35,14 +35,11 @@
             "name": "com.unity.rendering.hybrid",
             "expression": "0.14.0-preview.0",
             "define": "ENABLE_HYBRID_RENDERER_V2"
-<<<<<<< HEAD
-=======
         },
         {
             "name": "com.unity.modules.nvidia",
             "expression": "1.0.0",
             "define": "ENABLE_NVIDIA_MODULE"
->>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
         }
     ],
     "noEngineReferences": false

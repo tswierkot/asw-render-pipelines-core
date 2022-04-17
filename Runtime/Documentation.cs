@@ -44,9 +44,6 @@ namespace UnityEngine.Rendering
         /// <summary>
         /// Current version of the documentation.
         /// </summary>
-<<<<<<< HEAD
-        public const string version = "10.8";
-=======
         public static string version
         {
             get
@@ -67,7 +64,6 @@ namespace UnityEngine.Rendering
         /// <param name="pageName">The page name</param>
         /// <returns>The full url page</returns>
         public static string GetPageLink(string packageName, string pageName) => string.Format(url, packageName, version, pageName);
->>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
     }
 
     /// <summary>

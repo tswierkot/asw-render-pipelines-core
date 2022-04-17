@@ -24,11 +24,7 @@ namespace UnityEngine.Experimental.Rendering.RenderGraphModule
         /// <returns>An updated resource handle to the input resource.</returns>
         public TextureHandle UseColorBuffer(in TextureHandle input, int index)
         {
-<<<<<<< HEAD
-            CheckResource(input.handle);
-=======
             CheckResource(input.handle, true);
->>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
             m_Resources.IncrementWriteCount(input.handle);
             m_RenderPass.SetColorBuffer(input, index);
             return input;
@@ -42,11 +38,7 @@ namespace UnityEngine.Experimental.Rendering.RenderGraphModule
         /// <returns>An updated resource handle to the input resource.</returns>
         public TextureHandle UseDepthBuffer(in TextureHandle input, DepthAccess flags)
         {
-<<<<<<< HEAD
-            CheckResource(input.handle);
-=======
             CheckResource(input.handle, true);
->>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
             m_Resources.IncrementWriteCount(input.handle);
             m_RenderPass.SetDepthBuffer(input, flags);
             return input;
@@ -61,11 +53,7 @@ namespace UnityEngine.Experimental.Rendering.RenderGraphModule
         {
             CheckResource(input.handle);
 
-<<<<<<< HEAD
-            if (!m_Resources.IsResourceImported(input.handle) && m_Resources.TextureNeedsFallback(input))
-=======
             if (!m_Resources.IsRenderGraphResourceImported(input.handle) && m_Resources.TextureNeedsFallback(input))
->>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
             {
                 // If texture is read from but never written to, return a fallback black texture to have valid reads
                 // Return one from the preallocated default textures if possible
@@ -98,10 +86,6 @@ namespace UnityEngine.Experimental.Rendering.RenderGraphModule
         {
             CheckResource(input.handle);
             m_Resources.IncrementWriteCount(input.handle);
-<<<<<<< HEAD
-            // TODO RENDERGRAPH: Manage resource "version" for debugging purpose
-=======
->>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
             m_RenderPass.AddResourceWrite(input.handle);
             return input;
         }
@@ -292,11 +276,7 @@ namespace UnityEngine.Experimental.Rendering.RenderGraphModule
             m_Disposed = true;
         }
 
-<<<<<<< HEAD
-        void CheckResource(in ResourceHandle res)
-=======
         void CheckResource(in ResourceHandle res, bool dontCheckTransientReadWrite = false)
->>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
         {
 #if DEVELOPMENT_BUILD || UNITY_EDITOR
             if (res.IsValid())
@@ -324,10 +304,7 @@ namespace UnityEngine.Experimental.Rendering.RenderGraphModule
         {
             m_RenderPass.GenerateDebugData(value);
         }
-<<<<<<< HEAD
-=======
 
->>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
         #endregion
     }
 }

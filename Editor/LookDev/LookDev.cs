@@ -74,17 +74,10 @@ namespace UnityEditor.Rendering.LookDev
         internal static IViewDisplayer currentViewDisplayer => s_ViewDisplayer;
         internal static IEnvironmentDisplayer currentEnvironmentDisplayer => s_EnvironmentDisplayer;
 
-<<<<<<< HEAD
-        [MenuItem("Window/Render Pipeline/Look Dev", false, 10200)]
-        static void OpenLookDev() => Open();
-
-        [MenuItem("Window/Render Pipeline/Look Dev", true, 10200)]
-=======
         [MenuItem("Window/Rendering/Look Dev", false, 10001)]
         static void OpenLookDev() => Open();
 
         [MenuItem("Window/Rendering/Look Dev", true, 10001)]
->>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
         static bool LookDevAvailable() => supported;
 
         internal static bool waitingConfigure { get; private set; } = true;

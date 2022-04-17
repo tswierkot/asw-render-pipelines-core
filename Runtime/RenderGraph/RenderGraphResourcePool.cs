@@ -25,19 +25,12 @@ namespace UnityEngine.Experimental.Rendering.RenderGraphModule
         const int kStaleResourceLifetime = 10;
 
         // Release the GPU resource itself
-<<<<<<< HEAD
-        abstract protected void ReleaseInternalResource(Type res);
-        abstract protected string GetResourceName(Type res);
-        abstract protected long GetResourceSize(Type res);
-        abstract protected string GetResourceTypeName();
-=======
         protected abstract void ReleaseInternalResource(Type res);
         protected abstract string GetResourceName(Type res);
         protected abstract long GetResourceSize(Type res);
         protected abstract string GetResourceTypeName();
         protected abstract int GetSortIndex(Type res);
 
->>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
 
         public void ReleaseResource(int hash, Type resource, int currentFrameIndex)
         {
@@ -110,17 +103,6 @@ namespace UnityEngine.Experimental.Rendering.RenderGraphModule
             m_FrameAllocatedResources.Clear();
         }
 
-<<<<<<< HEAD
-
-        struct ResourceLogInfo
-        {
-            public string name;
-            public long size;
-        }
-
-        public void LogResources(RenderGraphLogger logger)
-        {
-=======
         struct ResourceLogInfo
         {
             public string name;
@@ -129,17 +111,12 @@ namespace UnityEngine.Experimental.Rendering.RenderGraphModule
 
         public override void LogResources(RenderGraphLogger logger)
         {
->>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
             List<ResourceLogInfo> allocationList = new List<ResourceLogInfo>();
             foreach (var kvp in m_ResourcePool)
             {
                 foreach (var res in kvp.Value)
                 {
-<<<<<<< HEAD
-                    allocationList.Add(new ResourceLogInfo { name = GetResourceName(res.resource), size = GetResourceSize(res.resource) } );
-=======
                     allocationList.Add(new ResourceLogInfo { name = GetResourceName(res.Value.resource), size = GetResourceSize(res.Value.resource) });
->>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
                 }
             }
 
@@ -149,7 +126,6 @@ namespace UnityEngine.Experimental.Rendering.RenderGraphModule
             int index = 0;
             float total = 0;
             foreach (var element in allocationList)
-<<<<<<< HEAD
             {
                 float size = element.size / (1024.0f * 1024.0f);
                 total += size;
@@ -165,107 +141,6 @@ namespace UnityEngine.Experimental.Rendering.RenderGraphModule
             // Indeed, when having multiple off-screen cameras, they are rendered in a separate SRP render call and thus with a different frame index than main camera
             // This causes texture to be deallocated/reallocated every frame if the two cameras don't need the same buffers.
             return (lastUsedFrameIndex + kStaleResourceLifetime) < currentFrameIndex;
-        }
-    }
-
-    class TexturePool : RenderGraphResourcePool<RTHandle>
-    {
-        protected override void ReleaseInternalResource(RTHandle res)
-        {
-            res.Release();
-        }
-
-        protected override string GetResourceName(RTHandle res)
-        {
-            return res.rt.name;
-        }
-
-        protected override long GetResourceSize(RTHandle res)
-        {
-            return Profiling.Profiler.GetRuntimeMemorySizeLong(res.rt);
-        }
-
-        override protected string GetResourceTypeName()
-        {
-            return "Texture";
-        }
-
-        // Another C# nicety.
-        // We need to re-implement the whole thing every time because:
-        // - obj.resource.Release is Type specific so it cannot be called on a generic (and there's no shared interface for resources like RTHandle, ComputeBuffers etc)
-        // - We can't use a virtual release function because it will capture this in the lambda for RemoveAll generating GCAlloc in the process.
-        override public void PurgeUnusedResources(int currentFrameIndex)
-        {
-            // Update the frame index for the lambda. Static because we don't want to capture.
-            s_CurrentFrameIndex = currentFrameIndex;
-
-            foreach (var kvp in m_ResourcePool)
-            {
-                var list = kvp.Value;
-                list.RemoveAll(obj =>
-                {
-                    if (ShouldReleaseResource(obj.frameIndex, s_CurrentFrameIndex))
-                    {
-                        obj.resource.Release();
-                        return true;
-                    }
-                    return false;
-                });
-=======
-            {
-                float size = element.size / (1024.0f * 1024.0f);
-                total += size;
-                logger.LogLine($"[{index++:D2}]\t[{size:0.00} MB]\t{element.name}");
->>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
-            }
-
-            logger.LogLine($"\nTotal Size [{total:0.00}]");
-        }
-
-        static protected bool ShouldReleaseResource(int lastUsedFrameIndex, int currentFrameIndex)
-        {
-<<<<<<< HEAD
-            return "ComputeBufferNameNotAvailable"; // res.name is a setter only :(
-        }
-
-        protected override long GetResourceSize(ComputeBuffer res)
-        {
-            return res.count * res.stride;
-        }
-
-        override protected string GetResourceTypeName()
-        {
-            return "ComputeBuffer";
-        }
-
-        // Another C# nicety.
-        // We need to re-implement the whole thing every time because:
-        // - obj.resource.Release is Type specific so it cannot be called on a generic (and there's no shared interface for resources like RTHandle, ComputeBuffers etc)
-        // - We can't use a virtual release function because it will capture this in the lambda for RemoveAll generating GCAlloc in the process.
-        override public void PurgeUnusedResources(int currentFrameIndex)
-        {
-            // Update the frame index for the lambda. Static because we don't want to capture.
-            s_CurrentFrameIndex = currentFrameIndex;
-
-            foreach (var kvp in m_ResourcePool)
-            {
-                var list = kvp.Value;
-                list.RemoveAll(obj =>
-                {
-                    if (ShouldReleaseResource(obj.frameIndex, s_CurrentFrameIndex))
-                    {
-                        obj.resource.Release();
-                        return true;
-                    }
-                    return false;
-                });
-            }
-=======
-            // We need to have a delay of a few frames before releasing resources for good.
-            // Indeed, when having multiple off-screen cameras, they are rendered in a separate SRP render call and thus with a different frame index than main camera
-            // This causes texture to be deallocated/reallocated every frame if the two cameras don't need the same buffers.
-            return (lastUsedFrameIndex + kStaleResourceLifetime) < currentFrameIndex;
->>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
         }
     }
 }

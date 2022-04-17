@@ -53,10 +53,7 @@ namespace UnityEngine.Experimental.Rendering.RenderGraphModule
         {
             blackTexture = renderGraph.ImportTexture(m_BlackTexture2D);
             whiteTexture = renderGraph.ImportTexture(m_WhiteTexture2D);
-<<<<<<< HEAD
-=======
             defaultShadowTexture = renderGraph.ImportTexture(m_ShadowTexture2D);
->>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
 
             clearTextureXR = renderGraph.ImportTexture(TextureXR.GetClearTexture());
             magentaTextureXR = renderGraph.ImportTexture(TextureXR.GetMagentaTexture());
@@ -66,9 +63,5 @@ namespace UnityEngine.Experimental.Rendering.RenderGraphModule
             blackTexture3DXR = renderGraph.ImportTexture(TextureXR.GetBlackTexture3D());
             whiteTextureXR = renderGraph.ImportTexture(TextureXR.GetWhiteTexture());
         }
-<<<<<<< HEAD
-
-=======
->>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
     }
 }

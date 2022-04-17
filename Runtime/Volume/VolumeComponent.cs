@@ -84,11 +84,7 @@ namespace UnityEngine.Rendering
     /// <code>
     /// using UnityEngine.Rendering;
     ///
-<<<<<<< HEAD
-    /// [Serializable, VolumeComponentMenu("Custom/Example Component")]
-=======
     /// [Serializable, VolumeComponentMenuForRenderPipeline("Custom/Example Component")]
->>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
     /// public class ExampleComponent : VolumeComponent
     /// {
     ///     public ClampedFloatParameter intensity = new ClampedFloatParameter(0f, 0f, 1f);
@@ -173,11 +169,7 @@ namespace UnityEngine.Rendering
 
             foreach (var parameter in parameters)
             {
-<<<<<<< HEAD
-                if(parameter != null)
-=======
                 if (parameter != null)
->>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
                     parameter.OnEnable();
                 else
                     Debug.LogWarning("Volume Component " + GetType().Name + " contains a null parameter; please make sure all parameters are initialized to a default value. Until this is fixed the null parameters will not be considered by the system.");
@@ -316,11 +308,7 @@ namespace UnityEngine.Rendering
         {
             for (int i = 0; i < parameters.Count; i++)
             {
-<<<<<<< HEAD
-                if(parameters[i] != null)
-=======
                 if (parameters[i] != null)
->>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
                     parameters[i].Release();
             }
         }

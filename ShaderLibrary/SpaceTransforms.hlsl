@@ -13,11 +13,6 @@ float4x4 GetObjectToWorldMatrix()
     return UNITY_MATRIX_M;
 }
 
-float4x4 GetPrevObjectToWorldMatrix()
-{
-    return UNITY_MATRIX_PREV_M;
-}
-
 float4x4 GetWorldToObjectMatrix()
 {
     return UNITY_MATRIX_I_M;
@@ -92,13 +87,9 @@ float3 TransformObjectToWorld(float3 positionOS)
 
 float3 TransformPreviousObjectToWorld(float3 positionOS)
 {
-<<<<<<< HEAD
-    return mul(GetPrevObjectToWorldMatrix(), float4(positionOS, 1.0)).xyz;
-=======
 #if !defined(SHADER_STAGE_RAY_TRACING)
     return mul(GetPrevObjectToWorldMatrix(), float4(positionOS, 1.0)).xyz;
 #endif
->>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
 }
 
 float3 TransformWorldToObject(float3 positionWS)

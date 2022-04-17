@@ -311,21 +311,6 @@ namespace UnityEngine.Experimental.Rendering.RenderGraphModule
             }
         }
 
-<<<<<<< HEAD
-        RenderGraphResourceRegistry             m_Resources;
-        RenderGraphObjectPool                   m_RenderGraphPool = new RenderGraphObjectPool();
-        List<RenderGraphPass>                   m_RenderPasses = new List<RenderGraphPass>(64);
-        List<RendererListHandle>                m_RendererLists = new List<RendererListHandle>(32);
-        RenderGraphDebugParams                  m_DebugParameters = new RenderGraphDebugParams();
-        RenderGraphLogger                       m_Logger = new RenderGraphLogger();
-        RenderGraphDefaultResources             m_DefaultResources = new RenderGraphDefaultResources();
-        Dictionary<int, ProfilingSampler>       m_DefaultProfilingSamplers = new Dictionary<int, ProfilingSampler>();
-        bool                                    m_ExecutionExceptionWasRaised;
-        RenderGraphContext                      m_RenderGraphContext = new RenderGraphContext();
-        CommandBuffer                           m_PreviousCommandBuffer;
-        int                                     m_CurrentImmediatePassIndex;
-        List<int>[]                             m_ImmediateModeResourceList = new List<int>[(int)RenderGraphResourceType.Count];
-=======
         RenderGraphResourceRegistry m_Resources;
         RenderGraphObjectPool m_RenderGraphPool = new RenderGraphObjectPool();
         List<RenderGraphPass> m_RenderPasses = new List<RenderGraphPass>(64);
@@ -339,20 +324,12 @@ namespace UnityEngine.Experimental.Rendering.RenderGraphModule
         CommandBuffer m_PreviousCommandBuffer;
         int m_CurrentImmediatePassIndex;
         List<int>[] m_ImmediateModeResourceList = new List<int>[(int)RenderGraphResourceType.Count];
->>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
 
         // Compiled Render Graph info.
         DynamicArray<CompiledResourceInfo>[] m_CompiledResourcesInfos = new DynamicArray<CompiledResourceInfo>[(int)RenderGraphResourceType.Count];
         DynamicArray<CompiledPassInfo> m_CompiledPassInfos = new DynamicArray<CompiledPassInfo>();
         Stack<int> m_CullingStack = new Stack<int>();
 
-<<<<<<< HEAD
-        int                                     m_ExecutionCount;
-        RenderGraphDebugData                    m_RenderGraphDebugData = new RenderGraphDebugData();
-
-        // Global list of living render graphs
-        static List<RenderGraph>                s_RegisteredGraphs = new List<RenderGraph>();
-=======
         int m_ExecutionCount;
         int m_CurrentFrameIndex;
         bool m_HasRenderGraphBegun;
@@ -362,7 +339,6 @@ namespace UnityEngine.Experimental.Rendering.RenderGraphModule
 
         // Global list of living render graphs
         static List<RenderGraph> s_RegisteredGraphs = new List<RenderGraph>();
->>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
 
         #region Public Interface
         /// <summary>Name of the Render Graph.</summary>
@@ -388,22 +364,13 @@ namespace UnityEngine.Experimental.Rendering.RenderGraphModule
         public RenderGraph(string name = "RenderGraph")
         {
             this.name = name;
-<<<<<<< HEAD
-            m_Resources = new RenderGraphResourceRegistry(m_DebugParameters, m_Logger);
-=======
             m_Resources = new RenderGraphResourceRegistry(m_DebugParameters, m_FrameInformationLogger);
->>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
 
             for (int i = 0; i < (int)RenderGraphResourceType.Count; ++i)
             {
                 m_CompiledResourcesInfos[i] = new DynamicArray<CompiledResourceInfo>();
             }
 
-<<<<<<< HEAD
-            m_DebugParameters.RegisterDebug(this.name);
-
-=======
->>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
             s_RegisteredGraphs.Add(this);
             onGraphRegistered?.Invoke(this);
         }
@@ -413,29 +380,15 @@ namespace UnityEngine.Experimental.Rendering.RenderGraphModule
         /// </summary>
         public void Cleanup()
         {
-<<<<<<< HEAD
-            m_DebugParameters.UnRegisterDebug(this.name);
-            m_Resources.Cleanup();
-            m_DefaultResources.Cleanup();
-=======
             m_Resources.Cleanup();
             m_DefaultResources.Cleanup();
             m_RenderGraphPool.Cleanup();
->>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
 
             s_RegisteredGraphs.Remove(this);
             onGraphUnregistered?.Invoke(this);
         }
 
         /// <summary>
-<<<<<<< HEAD
-        /// Returns the last rendered frame debug data. Can be null if requireDebugData is set to false.
-        /// </summary>
-        /// <returns>The last rendered frame debug data</returns>
-        internal RenderGraphDebugData GetDebugData()
-        {
-            return m_RenderGraphDebugData;
-=======
         /// Register the render graph to the debug window.
         /// </summary>
         /// <param name="panel"></param>
@@ -471,7 +424,6 @@ namespace UnityEngine.Experimental.Rendering.RenderGraphModule
                 return debugData;
 
             return null;
->>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
         }
 
         /// <summary>
@@ -480,11 +432,6 @@ namespace UnityEngine.Experimental.Rendering.RenderGraphModule
         /// </summary>
         public void EndFrame()
         {
-<<<<<<< HEAD
-            m_Resources.PurgeUnusedResources();
-            m_DebugParameters.logFrameInformation = false;
-            m_DebugParameters.logResources = false;
-=======
             m_Resources.PurgeUnusedGraphicsResources();
 
             if (m_DebugParameters.logFrameInformation)
@@ -497,7 +444,6 @@ namespace UnityEngine.Experimental.Rendering.RenderGraphModule
                 m_Resources.FlushLogs();
                 m_DebugParameters.logResources = false;
             }
->>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
         }
 
         /// <summary>
@@ -696,15 +642,11 @@ namespace UnityEngine.Experimental.Rendering.RenderGraphModule
 
             m_Resources.BeginRenderGraph(m_ExecutionCount++);
 
-<<<<<<< HEAD
-            m_Resources.BeginRender(parameters.currentFrameIndex, m_ExecutionCount);
-=======
             if (m_DebugParameters.enableLogging)
             {
                 m_FrameInformationLogger.Initialize(m_CurrentExecutionName);
             }
 
->>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
             m_DefaultResources.InitializeForRendering(this);
 
             m_RenderGraphContext.cmd = parameters.commandBuffer;
@@ -769,12 +711,7 @@ namespace UnityEngine.Experimental.Rendering.RenderGraphModule
             }
             finally
             {
-<<<<<<< HEAD
-                if (!m_ExecutionExceptionWasRaised && requireDebugData)
-                    GenerateDebugData();
-=======
                 GenerateDebugData();
->>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
 
                 if (m_DebugParameters.immediateMode)
                     ReleaseImmediateModeResources();
@@ -833,14 +770,6 @@ namespace UnityEngine.Experimental.Rendering.RenderGraphModule
         #endregion
 
         #region Internal Interface
-<<<<<<< HEAD
-        internal static List<RenderGraph>  GetRegisteredRenderGraphs()
-        {
-            return s_RegisteredGraphs;
-        }
-
-=======
->>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
         // Internal for testing purpose only
         internal DynamicArray<CompiledPassInfo> GetCompiledPassInfos() { return m_CompiledPassInfos; }
 
@@ -873,12 +802,9 @@ namespace UnityEngine.Experimental.Rendering.RenderGraphModule
         internal delegate void OnGraphRegisteredDelegate(RenderGraph graph);
         internal static event OnGraphRegisteredDelegate onGraphRegistered;
         internal static event OnGraphRegisteredDelegate onGraphUnregistered;
-<<<<<<< HEAD
-=======
         internal delegate void OnExecutionRegisteredDelegate(RenderGraph graph, string executionName);
         internal static event OnExecutionRegisteredDelegate onExecutionRegistered;
         internal static event OnExecutionRegisteredDelegate onExecutionUnregistered;
->>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
 
         #endregion
 
@@ -1626,12 +1552,6 @@ namespace UnityEngine.Experimental.Rendering.RenderGraphModule
             }
         }
 
-<<<<<<< HEAD
-
-        void GenerateDebugData()
-        {
-            m_RenderGraphDebugData.Clear();
-=======
         void GenerateDebugData()
         {
             if (m_ExecutionExceptionWasRaised)
@@ -1651,7 +1571,6 @@ namespace UnityEngine.Experimental.Rendering.RenderGraphModule
             }
 
             debugData.Clear();
->>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
 
             for (int type = 0; type < (int)RenderGraphResourceType.Count; ++type)
             {
@@ -1659,13 +1578,8 @@ namespace UnityEngine.Experimental.Rendering.RenderGraphModule
                 {
                     ref var resourceInfo = ref m_CompiledResourcesInfos[type][i];
                     RenderGraphDebugData.ResourceDebugData newResource = new RenderGraphDebugData.ResourceDebugData();
-<<<<<<< HEAD
-                    newResource.name = m_Resources.GetResourceName((RenderGraphResourceType)type, i);
-                    newResource.imported = m_Resources.IsResourceImported((RenderGraphResourceType)type, i);
-=======
                     newResource.name = m_Resources.GetRenderGraphResourceName((RenderGraphResourceType)type, i);
                     newResource.imported = m_Resources.IsRenderGraphResourceImported((RenderGraphResourceType)type, i);
->>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
                     newResource.creationPassIndex = -1;
                     newResource.releasePassIndex = -1;
 
@@ -1678,11 +1592,7 @@ namespace UnityEngine.Experimental.Rendering.RenderGraphModule
                         UpdateImportedResourceLifeTime(ref newResource, newResource.producerList);
                     }
 
-<<<<<<< HEAD
-                    m_RenderGraphDebugData.resourceLists[type].Add(newResource);
-=======
                     debugData.resourceLists[type].Add(newResource);
->>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
                 }
             }
 
@@ -1709,37 +1619,15 @@ namespace UnityEngine.Experimental.Rendering.RenderGraphModule
 
                     foreach (var resourceCreate in passInfo.resourceCreateList[type])
                     {
-<<<<<<< HEAD
-                        var res = m_RenderGraphDebugData.resourceLists[type][resourceCreate];
-                        if (res.imported)
-                            continue;
-                        res.creationPassIndex = i;
-                        m_RenderGraphDebugData.resourceLists[type][resourceCreate] = res;
-=======
                         var res = debugData.resourceLists[type][resourceCreate];
                         if (res.imported)
                             continue;
                         res.creationPassIndex = i;
                         debugData.resourceLists[type][resourceCreate] = res;
->>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
                     }
 
                     foreach (var resourceRelease in passInfo.resourceReleaseList[type])
                     {
-<<<<<<< HEAD
-                        var res = m_RenderGraphDebugData.resourceLists[type][resourceRelease];
-                        if (res.imported)
-                            continue;
-                        res.releasePassIndex = i;
-                        m_RenderGraphDebugData.resourceLists[type][resourceRelease] = res;
-                    }
-                }
-
-                m_RenderGraphDebugData.passList.Add(newPass);
-            }
-        }
-
-=======
                         var res = debugData.resourceLists[type][resourceRelease];
                         if (res.imported)
                             continue;
@@ -1762,7 +1650,6 @@ namespace UnityEngine.Experimental.Rendering.RenderGraphModule
             m_DebugData.Clear();
         }
 
->>>>>>> 30e14a2ca18f7c4c9903767895c1ca15d1af6c76
         #endregion
     }
 
